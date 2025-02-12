@@ -7,11 +7,15 @@ const Alliance = require("./models/alliance");
 const Attack = require("./models/attack");
 const Player = require("./models/player");
 
+const allowedOrigins = process.env.NODE_ENV === "production"
+  ? ["https://datak.onrender.com"]  // Uniquement en production
+  : ["http://localhost:4200", "https://datak.onrender.com"]; // En dev, inclut localhost
+
 const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: "https://datak.onrender.com",
+    origin: allowedOrigins,
     methods: ["GET", "POST"],
     transports: ['websocket', 'polling'],
     credentials: true
