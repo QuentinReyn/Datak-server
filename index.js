@@ -15,8 +15,7 @@ const io = new Server(server, {
     methods: ["GET", "POST"],
     transports: ['websocket', 'polling'],
     credentials: true
-},
-allowEIO3: true
+}
 });
 
 app.use(cors());
