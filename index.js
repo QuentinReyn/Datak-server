@@ -11,9 +11,12 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: "*",
+    origin: "https://datak.vercel.app/",
     methods: ["GET", "POST"],
-  },
+    transports: ['websocket', 'polling'],
+    credentials: true
+},
+allowEIO3: true
 });
 
 app.use(cors());
@@ -68,7 +71,7 @@ io.on("connection", (socket) => {
     console.log(`${player.id} a rejoint l'alliance`);
 
     // Renvoie la session existante avec le joueur et la liste des attaques
-    socket.emit("joinedAlliance", { player, attacks: alliances[allianceId].attacks });
+    socket.emit("joinedAlliance", { player, attacks: alliances[allianceId].attacks, alliance: alliances[allianceId] });
   });
 
 
