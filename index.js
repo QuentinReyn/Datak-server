@@ -11,7 +11,7 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: "https://datak.vercel.app",
+    origin: "https://datak.onrender.com",
     methods: ["GET", "POST"],
     transports: ['websocket', 'polling'],
     credentials: true
