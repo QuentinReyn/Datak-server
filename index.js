@@ -34,6 +34,10 @@ io.on("connection", (socket) => {
   socket.on("createAlliance", (data) => {
     const newAlliance = new Alliance(data.name);
     alliances[newAlliance.id] = newAlliance;
+    let player = new Player(data.pseudo);
+    player.currentSocketId = socket.id;
+    alliances[newAlliance.id].players.push(player);
+    players[socket.id] = player;
     console.log("Alliance créée:", newAlliance);
     socket.emit("allianceCreated", newAlliance);
   });
@@ -200,7 +204,7 @@ io.on("connection", (socket) => {
   socket.on("checkAlliance", (allianceId, callback) => {
     const exists = !!alliances[allianceId]; // Vérifie si l'alliance existe
     console.log(exists);
-    callback(exists);
+    callback({exists : exists, alliance: alliances[allianceId]});
   });
 
   socket.on("getPlayerByPseudo", ({ pseudo, allianceId }, callback) => {
